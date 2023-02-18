@@ -1,15 +1,20 @@
 import useAuthStore from "@src/store/auth";
 import axios from "axios";
+import { useMemo } from "react";
 
 const useAxios = () => {
-	const token = useAuthStore((store) => store.token);
+	const [{ token }] = useAuthStore();
 
-	const instance = axios.create({
-		baseURL: "https://jpdb.io/api/v1/",
-		headers: {
-			Authorization: `Bearer ${token}`,
-		},
-	});
+	const instance = useMemo(
+		() =>
+			axios.create({
+				baseURL: "https://jpdb.io/api/v1/",
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}),
+		[token],
+	);
 
 	return instance;
 };

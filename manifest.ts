@@ -9,6 +9,7 @@ const manifest: chrome.runtime.ManifestV3 = {
 	version: packageJson.version,
 	description: packageJson.description,
 	background: { service_worker: "src/pages/background/index.js" },
+	permissions: ["storage"],
 	action: {
 		default_popup: "src/pages/popup/index.html",
 		default_icon: "icon-34.png",

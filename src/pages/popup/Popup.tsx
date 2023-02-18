@@ -6,10 +6,8 @@ import useAxios from "@src/hooks/useAxios";
 
 const Popup = () => {
   const axios = useAxios();
-  const [token, setToken] = useAuthStore((store) => [
-    store.token,
-    store.setToken,
-  ]);
+  const [settings, setSettings] = useAuthStore();
+
   const [testState, setTestState] = useState("");
 
   const testToken = async () => {
@@ -23,7 +21,10 @@ const Popup = () => {
     <div className="App">
       <header className="App-header">
         <label>jpdb.io API token</label>
-        <input value={token} onChange={(ev) => setToken(ev.target.value)} />
+        <input
+          value={settings.token}
+          onChange={(ev) => setSettings({ token: ev.target.value })}
+        />
 
         <button type="button" onClick={testToken}>
           Test token
