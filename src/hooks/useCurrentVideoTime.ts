@@ -9,6 +9,11 @@ const useCurrentVideoTime = () => {
 
 	useEffect(() => {
 		const player = document.getElementById("movie_player");
+
+		if (!player) {
+			return;
+		}
+
 		const video = player.querySelector("video");
 		video.addEventListener("timeupdate", onTimeUpdate);
 

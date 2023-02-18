@@ -1,14 +1,12 @@
 @import "@assets/style/theme.scss";
 
-$known: #008000;
-$unknown: #c0c0c0;
-
 .content-view {
   font-size: 30px;
   position: absolute;
   display: flex;
   align-content: center;
   justify-content: center;
+  flex-direction: column;
   width: 100%;
   bottom: 100px;
   z-index: 9999;
@@ -17,4 +15,6 @@ $unknown: #c0c0c0;
 .caption {
   background-color: white;
   padding: 5px;
+  flex: 1;
+  align-self: center;
 }

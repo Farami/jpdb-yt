@@ -9,12 +9,14 @@ const useCaptions = () => {
 	useEffect(() => {
 		const fetchCaptions = async () => {
 			const languageList = await getLanguagesList();
+			console.log("language list", languageList);
 			const japaneseSubtitles = languageList.find(
 				(x) => x.languageCode === "ja",
 			);
 
 			if (!japaneseSubtitles) {
 				console.log("No japanese subtitles found.");
+				return;
 			}
 
 			const subtitles = await getSubtitles(japaneseSubtitles);

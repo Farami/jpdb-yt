@@ -18,6 +18,10 @@ function extractCaptions(html: string): CaptionsTrackList {
 async function getLanguagesList() {
 	const videoId = getVideoId();
 
+	if (!videoId) {
+		return [];
+	}
+
 	const videoURL = `https://www.youtube.com/watch?v=${videoId}`;
 	const { data } = await axios.get<string>(videoURL);
 	const decodedData = data.replace("\\u0026", "&").replace("\\", "");
@@ -60,7 +64,8 @@ async function getSubtitles(subtitle: CaptionsTrack): Promise<Caption[]> {
 			const htmlText = line
 				.replace(/<text.+>/, "")
 				.replace(/&amp;/gi, "&")
-				.replace(/<\/?[^>]+(>|$)/g, "");
+				.replace(/<\/?[^>]+(>|$)/g, "")
+				.replace(/(\r\n|\n|\r)/gm, "");
 
 			const decodedText = he.decode(htmlText);
 			const text = striptags(decodedText);

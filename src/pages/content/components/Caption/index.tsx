@@ -1,20 +1,17 @@
-import useParser from "@src/hooks/useParser";
-import React, { useEffect, useState } from "react";
+import CaptionToken from "../CaptionToken";
 
 type Props = {
-  caption: Caption;
+  caption: Token[];
 };
 
 function CaptionElement({ caption }: Props) {
-  const [parsedText, setParsedText] = useState(caption);
-
-  const parse = useParser();
-
-  useEffect(() => {
-    parse(caption.text);
-  }, [parse, caption]);
-
-  return <div className="caption">{caption.text}</div>;
+  return (
+    <div className="caption">
+      {caption.map((token) => (
+        <CaptionToken token={token} />
+      ))}
+    </div>
+  );
 }
 
 export default CaptionElement;

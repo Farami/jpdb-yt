@@ -1,8 +1,10 @@
 type TokenField =
 	| "vocabulary_index"
 	| "position_utf8"
+	| "position_utf16"
 	| "position_utf32"
 	| "length_utf8"
+	| "length_utf16"
 	| "length_utf32"
 	| "furigana";
 type VocabFields =
@@ -23,10 +25,26 @@ type ParseRequest = {
 	vocabulary_fields: VocabFields[];
 };
 
+type VocabState =
+	| "new"
+	| "learning"
+	| "known"
+	| "due"
+	| "failed"
+	| "blacklisted"
+	| "redundant"
+	| "suspended"
+	| "locked"
+	| "unknown"; // TODO add missing states
+
 type ParseResponse = {
-	tokens: Token[];
-	vocabulary: Vocabulary[];
+	tokens: [number, number, number, string[]][];
+	vocabulary: [[VocabState]][];
 };
 
-type Token = {};
-type Vocabulary = {};
+type Token = {
+	text: string;
+	furigana: (string | string[])[];
+	state: VocabState;
+	position: number;
+};

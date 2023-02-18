@@ -4,6 +4,12 @@ type Caption = {
 	text: string;
 };
 
+type ParsedCaption = {
+	dur: number;
+	start: number;
+	text: Token[];
+};
+
 type CaptionsTrackList = {
 	captionTracks?: CaptionsTrack[];
 };
