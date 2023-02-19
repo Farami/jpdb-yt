@@ -77,7 +77,7 @@ const useParser = () => {
 				}
 			}
 
-			console.log("parsed", text, "resulted in", data, "mapped to", tokens);
+			console.log("parsing resulted in", data, "mapped to", tokens);
 
 			return tokens;
 		},

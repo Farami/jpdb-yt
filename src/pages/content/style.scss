@@ -13,6 +13,8 @@
 }
 
 .caption {
+  display: flex;
+  align-items: end;
   background-color: white;
   padding: 5px;
   flex: 1;

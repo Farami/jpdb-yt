@@ -17,14 +17,34 @@ const stateColor: { [key in VocabState]: string } = {
   unknown: "#CB94FF",
 };
 
-function CaptionToken({ token }: Props) {
-  let color = stateColor[token.state] ?? "#CB94FF";
+function CaptionToken({ token: { text, furigana, state } }: Props) {
+  let color = stateColor[state] ?? "#CB94FF";
 
-  if (token.furigana) {
-    // when furigana is passed split the text into the separate parts again
+  const furiganaElements = [];
+  if (furigana) {
+    console.log("matches for", furigana, ":");
+    for (const f of furigana.filter(Array.isArray)) {
+      furiganaElements.push(
+        <span
+          style={{
+            fontSize: 15,
+            fontWeight: "initial",
+          }}
+        >
+          {f[1]}
+        </span>
+      );
+    }
   }
 
-  return <span style={{ color, fontWeight: "bold" }}>{token.text}</span>;
+  return (
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <span style={{ display: "flex", marginBottom: -10 }}>
+        {furiganaElements}
+      </span>
+      <span style={{ color, fontWeight: "bold" }}>{text}</span>
+    </div>
+  );
 }
 
 export default CaptionToken;

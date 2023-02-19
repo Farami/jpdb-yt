@@ -20,6 +20,7 @@ export default function App() {
     }
 
     const runParser = async () => {
+      // something is really fucked on this video: https://www.youtube.com/watch?v=7DHOVziRwBA&list=PLbqkLu2V1bJJUQ2aLZjFdz8decGs1kHg-&index=2&t=1s
       // take all captions from the array, merge them, send them through the parser, then split them up into captions again
       // do 100 captions at a time
       const captionsBatches = chunkArray(captions, 50);
