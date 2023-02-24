@@ -1,13 +1,13 @@
 import CaptionToken from "../CaptionToken";
 
 type Props = {
-  caption: Token[];
+  captionTokens: Token[];
 };
 
-function CaptionElement({ caption }: Props) {
+function CaptionElement({ captionTokens }: Props) {
   return (
     <div className="caption">
-      {caption.map((token) => (
+      {captionTokens.map((token) => (
         <CaptionToken token={token} />
       ))}
     </div>

@@ -1,15 +1,54 @@
-import { createRoot } from "react-dom/client";
-import App from "@src/pages/content/components/SubtitleViewer/app";
-import refreshOnUpdate from "virtual:reload-on-update-in-view";
-import { waitForElm } from "@src/helpers";
+import chunkArray from "@src/helpers/chunkArray";
+import useCaptions from "@src/hooks/useCaptions";
+import useCurrentVideoTime from "@src/hooks/useCurrentVideoTime";
+import useParser from "@src/hooks/useParser";
+import useVideoId from "@src/hooks/useVideoId";
+import useAuthStore from "@src/store/auth";
+import { useEffect, useMemo, useState } from "react";
+import Caption from "../Caption";
+import ParseButton from "../ParseButton";
 
-refreshOnUpdate("pages/content/components/Demo");
+export default function SubtitleViewer() {
+  const videoTime = useCurrentVideoTime();
+  const videoId = useVideoId();
+  const captions = useCaptions();
+  const parse = useParser();
+  const [{ token }] = useAuthStore();
 
-const root = document.createElement("div");
-root.id = "chrome-extension-boilerplate-react-vite-content-view-root";
+  const [parsedCaptions, setParsedCaptions] = useState<ParsedCaption[]>([]);
 
-waitForElm("#ytd-player > #container").then((elm) => {
-  elm.append(root);
-});
+  // reset parsed captions when video id changes (otherwise captions would persist across different videos)
+  useEffect(() => setParsedCaptions([]), [videoId]);
 
-createRoot(root).render(<App />);
+  const onParseButtonClick = async () => {
+    if (parsedCaptions.length > 0) {
+      setParsedCaptions([]);
+    } else {
+      setParsedCaptions(await parse(captions));
+    }
+  };
+
+  // plural because they can overlap
+  const currentCaptions = useMemo(
+    () =>
+      parsedCaptions?.filter(
+        (x) => x.start <= videoTime && x.start + x.dur >= videoTime
+      ),
+    [videoTime, parsedCaptions]
+  );
+
+  return (
+    <div className="content-view">
+      {token && captions.length > 0 && (
+        <ParseButton
+          onClick={onParseButtonClick}
+          active={parsedCaptions.length === 0}
+        />
+      )}
+      {currentCaptions?.length > 0 &&
+        currentCaptions.map((caption) => (
+          <Caption captionTokens={caption.text} />
+        ))}
+    </div>
+  );
+}

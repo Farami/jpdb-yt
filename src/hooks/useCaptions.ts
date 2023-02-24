@@ -1,14 +1,14 @@
-import getVideoId from "@src/helpers/getVideoId";
+import useVideoId from "@src/hooks/useVideoId";
 import { getLanguagesList, getSubtitles } from "@src/helpers/youtube";
 import { useEffect, useState } from "react";
 
 const useCaptions = () => {
 	const [captions, setCaptions] = useState<Caption[]>([]);
-	const videoId = getVideoId();
+	const videoId = useVideoId();
 
 	useEffect(() => {
 		const fetchCaptions = async () => {
-			const languageList = await getLanguagesList();
+			const languageList = await getLanguagesList(videoId);
 			console.log("language list", languageList);
 			const japaneseSubtitles = languageList.find(
 				(x) => x.languageCode === "ja",

@@ -19,7 +19,7 @@ const manifest: chrome.runtime.ManifestV3 = {
 	},
 	content_scripts: [
 		{
-			matches: ["*://*.youtube.com/watch*"],
+			matches: ["*://*.youtube.com/*"],
 			js: ["src/pages/content/index.js"],
 			css: ["assets/css/contentStyle.chunk.css"],
 		},

@@ -1,7 +1,6 @@
 import he from "he";
 import axios from "axios";
 import striptags from "striptags";
-import getVideoId from "@src/helpers/getVideoId";
 
 function extractCaptions(html: string): CaptionsTrackList {
 	const splittedHtml = html.split('"captions":');
@@ -15,9 +14,7 @@ function extractCaptions(html: string): CaptionsTrackList {
 	return null;
 }
 
-async function getLanguagesList() {
-	const videoId = getVideoId();
-
+async function getLanguagesList(videoId: string) {
 	if (!videoId) {
 		return [];
 	}
@@ -30,7 +27,7 @@ async function getLanguagesList() {
 
 	// ensure we have access to captions data
 	if (!(captionJSON && "captionTracks" in captionJSON)) {
-		throw new Error(`Could not find captions for video: ${videoId}`);
+		return [];
 	}
 
 	return captionJSON.captionTracks.map((track) => {
