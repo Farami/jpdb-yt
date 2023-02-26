@@ -2,7 +2,7 @@ import { createRoot } from "react-dom/client";
 import SubtitleViewer from "@src/pages/content/components/SubtitleViewer";
 import refreshOnUpdate from "virtual:reload-on-update-in-view";
 import { waitForElm } from "@src/helpers";
-import { getVideoId } from "@src/hooks/useVideoId";
+import getVideoId from "@src/helpers/getVideoId";
 
 refreshOnUpdate("pages/content/components/SubtitleViewer");
 

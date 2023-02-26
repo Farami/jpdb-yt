@@ -1,13 +1,5 @@
+import getVideoId from "@src/helpers/getVideoId";
 import { useEffect, useState } from "react";
-
-export const getVideoId = () => {
-	const url = window.location.href;
-
-	const regExp =
-		/^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
-	const match = url.match(regExp);
-	return match?.[1] ?? null;
-};
 
 const useVideoId = () => {
 	const [videoId, setVideoId] = useState(getVideoId());
@@ -18,7 +10,6 @@ const useVideoId = () => {
 		const observer = new MutationObserver((mutations) => {
 			mutations.forEach(() => {
 				if (oldHref !== document.location.href) {
-					console.log("url changed");
 					oldHref = document.location.href;
 					setVideoId(getVideoId());
 				}

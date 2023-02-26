@@ -20,7 +20,7 @@ type VocabFields =
 	| "due_at";
 
 type ParseRequest = {
-	text: string;
+	text: string[];
 	token_fields: TokenField[];
 	vocabulary_fields: VocabFields[];
 };
@@ -37,9 +37,14 @@ type VocabState =
 	| "locked"
 	| "unknown"; // TODO add missing states
 
+type TokenResponse = [number, number, number, (string | string[])[]];
+type TokenResponseGroup = TokenResponse[];
+type VocabResponse = [VocabState];
+type VocabResponseGroup = VocabResponse[];
+
 type ParseResponse = {
-	tokens: [number, number, number, string[]][];
-	vocabulary: [[VocabState]][];
+	tokens: TokenResponseGroup[];
+	vocabulary: VocabResponseGroup[];
 };
 
 type Token = {
