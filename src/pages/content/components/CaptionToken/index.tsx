@@ -1,6 +1,3 @@
-import React from "react";
-import Furigana from "./Furigana";
-
 type Props = {
   token: Token;
 };
@@ -19,20 +16,25 @@ const stateColor: { [key in VocabState]: string } = {
 };
 
 function CaptionToken({ token: { text, furigana, state } }: Props) {
-  let color = stateColor[state] ?? "#CB94FF";
+  let style = { color: stateColor[state] ?? "#CB94FF", fontWeight: "bold" };
 
-  const furiganaElements = furigana
-    ?.filter(Array.isArray)
-    .map((x) => <Furigana text={x[1]} />);
+  if (!furigana || furigana.length === 0) {
+    return <div style={style}>{text}</div>;
+  }
 
-  return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      <span style={{ display: "flex", marginBottom: -10 }}>
-        {furiganaElements}
-      </span>
-      <span style={{ color, fontWeight: "bold" }}>{text}</span>
-    </div>
-  );
+  const furiganaElements =
+    furigana.map((x) =>
+      !Array.isArray(x) ? (
+        <>{x}</>
+      ) : (
+        <ruby>
+          {x[0]}
+          <rt>{x[1]}</rt>
+        </ruby>
+      )
+    ) ?? [];
+
+  return <div style={style}>{furiganaElements}</div>;
 }
 
 export default CaptionToken;
