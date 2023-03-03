@@ -12,6 +12,7 @@ const useParser = () => {
 
 		// something is really fucked on this video: https://www.youtube.com/watch?v=7DHOVziRwBA&list=PLbqkLu2V1bJJUQ2aLZjFdz8decGs1kHg-&index=2&t=1s
 		// take all captions from the array, merge them, send them through the parser, then split them up into captions again
+		// TODO the api does not return a result for an array element that has nothing to parse in it, breaking this
 		const captionsBatches = chunkArray(captions, 100);
 		let allBatches: Token[][] = [];
 		for (const captionsBatch of captionsBatches) {
@@ -43,6 +44,8 @@ const useParser = () => {
 				vocabulary_fields: ["card_state"],
 			};
 
+			console.log("body", body);
+
 			const { data } = await axios.post<ParseResponse>("parse", body);
 
 			// api returns position and length as utf16 byte positions
@@ -55,17 +58,21 @@ const useParser = () => {
 				})),
 			);
 
-			// for (let i = 0; i < apiTokenGroups.length; i++) {
-			// 	const subtitleTokens = apiTokenGroups[i];
-			// 	const subtitle = subtitles[i];
-
-			// }
+			console.log(data);
 
 			let tokenGroups: Token[][] = [];
 
 			for (let textIndex = 0; textIndex < subtitles.length; textIndex++) {
 				let text = subtitles[textIndex];
 				let apiTokens = apiTokenGroups[textIndex];
+				// console.log(
+				// 	"subtitles",
+				// 	text,
+				// 	"apiTokens",
+				// 	apiTokens,
+				// 	"index",
+				// 	textIndex,
+				// );
 
 				let tokens: Token[] = [];
 

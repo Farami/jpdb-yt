@@ -9,23 +9,23 @@ const { resolve } = path;
 const outDir = resolve(__dirname, "..", "..", "public");
 
 export default function makeManifest(
-  manifest: chrome.runtime.ManifestV3
+	manifest: chrome.runtime.ManifestV3,
 ): PluginOption {
-  return {
-    name: "make-manifest",
-    buildEnd() {
-      if (!fs.existsSync(outDir)) {
-        fs.mkdirSync(outDir);
-      }
+	return {
+		name: "make-manifest",
+		buildEnd() {
+			if (!fs.existsSync(outDir)) {
+				fs.mkdirSync(outDir);
+			}
 
-      const manifestPath = resolve(outDir, "manifest.json");
+			const manifestPath = resolve(outDir, "manifest.json");
 
-      fs.writeFileSync(
-        manifestPath,
-        ManifestParser.convertManifestToString(manifest)
-      );
+			fs.writeFileSync(
+				manifestPath,
+				ManifestParser.convertManifestToString(manifest),
+			);
 
-      colorLog(`Manifest file copy complete: ${manifestPath}`, "success");
-    },
-  };
+			colorLog(`Manifest file copy complete: ${manifestPath}`, "success");
+		},
+	};
 }
