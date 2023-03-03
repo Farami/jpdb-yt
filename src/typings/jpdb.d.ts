@@ -1,4 +1,4 @@
-type TokenField =
+type TokenFields =
 	| "vocabulary_index"
 	| "position_utf8"
 	| "position_utf16"
@@ -7,7 +7,7 @@ type TokenField =
 	| "length_utf16"
 	| "length_utf32"
 	| "furigana";
-type VocabFields =
+type VocabularyFields =
 	| "vid"
 	| "sid"
 	| "rid"
@@ -21,8 +21,8 @@ type VocabFields =
 
 type ParseRequest = {
 	text: string[];
-	token_fields: TokenField[];
-	vocabulary_fields: VocabFields[];
+	token_fields: TokenFields[];
+	vocabulary_fields: VocabularyFields[];
 };
 
 type VocabState =
