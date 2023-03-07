@@ -3,9 +3,6 @@
   "name": "jpdb-yt",
   "version": "0.0.1",
   "description": "a youtube integration for jpdb",
-  "background": {
-    "service_worker": "src/pages/background/index.js"
-  },
   "permissions": [
     "storage"
   ],
