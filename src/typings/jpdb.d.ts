@@ -29,6 +29,7 @@ type VocabState =
 	| "new"
 	| "learning"
 	| "known"
+	| "never-forget"
 	| "due"
 	| "failed"
 	| "blacklisted"

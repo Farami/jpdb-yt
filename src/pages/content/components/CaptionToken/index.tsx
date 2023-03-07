@@ -1,40 +1,69 @@
+import { CSSProperties, useState } from "react";
+
 type Props = {
-	token: Token;
+  token: Token;
 };
 
 const stateColor: { [key in VocabState]: string } = {
-	learning: "#5EA77F",
-	blacklisted: "#343434",
-	due: "#FF4500",
-	failed: "#FFC000",
-	known: "#70C000",
-	redundant: "#70C000",
-	locked: "#FFD5D5",
-	suspended: "#FFD5D5",
-	new: "#CECECE",
-	unknown: "#CB94FF",
+  learning: "#5EA77F",
+  blacklisted: "#fff",
+  due: "#FF4500",
+  failed: "#FFC000",
+  known: "#70C000",
+  "never-forget": "#70C000",
+  redundant: "#70C000",
+  locked: "#FFD5D5",
+  suspended: "#FFD5D5",
+  new: "#CECECE",
+  unknown: "#CB94FF",
 };
 
 function CaptionToken({ token: { text, furigana, state } }: Props) {
-	let style = { color: stateColor[state] ?? "#CB94FF", fontWeight: "bold" };
+  const [isHovered, setIsHovered] = useState(false);
 
-	if (!furigana || furigana.length === 0) {
-		return <div style={style}>{text}</div>;
-	}
+  let style: CSSProperties = {
+    color: stateColor[state] ?? "#fff",
+    fontWeight: "bold",
+    backgroundColor: isHovered ? "gray" : "",
+    cursor: "pointer",
+    paddingLeft: "2px",
+    paddingRight: "2px",
+  };
 
-	const furiganaElements =
-		furigana.map((x) =>
-			!Array.isArray(x) ? (
-				<>{x}</>
-			) : (
-				<ruby>
-					{x[0]}
-					<rt>{x[1]}</rt>
-				</ruby>
-			),
-		) ?? [];
+  const onHover = () => {
+    console.log(text, furigana, state);
+    setIsHovered(true);
+  };
 
-	return <div style={style}>{furiganaElements}</div>;
+  const onLeave = () => setIsHovered(false);
+
+  if (!furigana || furigana.length === 0) {
+    furigana = [text];
+  }
+
+  const furiganaElements =
+    furigana.map((x) =>
+      !Array.isArray(x) ? (
+        <>{x}</>
+      ) : (
+        <ruby>
+          {x[0]}
+          <rt>{x[1]}</rt>
+        </ruby>
+      )
+    ) ?? [];
+
+  return (
+    <div
+      style={style}
+      onMouseOver={onHover}
+      onFocus={onHover}
+      onMouseOut={onLeave}
+      onBlur={onLeave}
+    >
+      {furiganaElements}
+    </div>
+  );
 }
 
 export default CaptionToken;
