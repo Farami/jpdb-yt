@@ -42,7 +42,7 @@ export default defineConfig({
 		rollupOptions: {
 			input: {
 				content: resolve(pagesDir, "content", "index.ts"),
-				contentStyle: resolve(pagesDir, "content", "style.scss"),
+				contentStyle: resolve(pagesDir, "content", "style.css"),
 				popup: resolve(pagesDir, "popup", "index.html"),
 			},
 			watch: {
