@@ -41,7 +41,7 @@ const useParser = () => {
 					"length_utf16",
 					"furigana",
 				],
-				vocabulary_fields: ["card_state"],
+				vocabulary_fields: ["card_state", "spelling", "reading", "meanings"],
 			};
 
 			console.log("body", body);
@@ -88,20 +88,27 @@ const useParser = () => {
 									runningToken.position + runningToken.length,
 								),
 								furigana: null,
-								state: "unknown",
+								state: ["unknown"],
+								spelling: "",
+								reading: "",
+								meanings: [],
 								position: i,
 							});
 
 							runningToken = null;
 						}
 
+						let vocab = data.vocabulary[apiToken.vocabIndex];
 						tokens.push({
 							text: text.slice(
 								apiToken.position,
 								apiToken.position + apiToken.length,
 							),
 							furigana: apiToken.furigana,
-							state: data.vocabulary[apiToken.vocabIndex]?.[0]?.[0] ?? "new", // bruh
+							state: vocab?.[0] ?? ["new"], // bruh
+							spelling: vocab?.[1],
+							reading: vocab?.[2],
+							meanings: vocab?.[3] ?? [], // TODO improve types
 							position: i,
 						});
 

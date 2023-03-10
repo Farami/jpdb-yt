@@ -38,19 +38,23 @@ type VocabState =
 	| "locked"
 	| "unknown"; // TODO add missing states
 
+type KnownStates = "known" | "never-forget" | "failed";
+
 type TokenResponse = [number, number, number, (string | string[])[]];
 type TokenResponseGroup = TokenResponse[];
-type VocabResponse = [VocabState];
-type VocabResponseGroup = VocabResponse[];
+type VocabResponse = [VocabState[], string, string, string[]];
 
 type ParseResponse = {
 	tokens: TokenResponseGroup[];
-	vocabulary: VocabResponseGroup[];
+	vocabulary: VocabResponse[];
 };
 
 type Token = {
 	text: string;
 	furigana: (string | string[])[];
-	state: VocabState;
+	spelling: string;
+	reading: string;
+	meanings: string[];
+	state: VocabState[];
 	position: number;
 };

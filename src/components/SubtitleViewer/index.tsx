@@ -3,7 +3,7 @@ import useCaptions from "@src/hooks/useCaptions";
 import useCurrentVideoTime from "@src/hooks/useCurrentVideoTime";
 import useParser from "@src/hooks/useParser";
 import useVideoId from "@src/hooks/useVideoId";
-import useAuthStore from "@src/store/auth";
+import useSettingsStore from "@src/store/settings";
 import { useEffect, useMemo, useState } from "react";
 import Caption from "../Caption";
 import ParseButton from "../ParseButton";
@@ -13,12 +13,18 @@ export default function SubtitleViewer() {
   const videoId = useVideoId();
   const captions = useCaptions();
   const parse = useParser();
-  const [{ token }] = useAuthStore();
+  const [{ token, autoParse }] = useSettingsStore();
 
   const [parsedCaptions, setParsedCaptions] = useState<ParsedCaption[]>([]);
 
   // reset parsed captions when video id changes (otherwise captions would persist across different videos)
   useEffect(() => setParsedCaptions([]), [videoId]);
+
+  useEffect(() => {
+    if (autoParse) {
+      parse(captions).then(setParsedCaptions);
+    }
+  }, [captions]);
 
   const toggleSubtitles = async () => {
     if (parsedCaptions.length > 0) {

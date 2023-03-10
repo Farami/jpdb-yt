@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 
-import useAuthStore from "@src/store/auth";
+import useSettingsStore, { FuriganaDisplay } from "@src/store/settings";
 import useAxios from "@src/hooks/useAxios";
+import Checkbox from "@src/components/Checkbox";
 
 const Popup = () => {
   const axios = useAxios();
-  const [settings, setSettings] = useAuthStore();
+  const [settings, setSettings] = useSettingsStore();
 
   const [testState, setTestState] = useState("");
 
@@ -19,7 +20,7 @@ const Popup = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center py-2 px-6 w-80 dark:bg-neutral-800">
+    <div className="flex flex-col justify-center py-2 px-6 w-80 dark:bg-neutral-800">
       <header className="font-bold text-lg pb-6 dark:text-white">
         jpdb.io youtube subtitle parser
       </header>
@@ -31,10 +32,41 @@ const Popup = () => {
       </label>
       <input
         id="token"
-        className="border text-sm rounded-lg block w-full p-1 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+        className="border text-sm rounded-lg block w-full p-1 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 mb-4"
         value={settings.token}
-        onChange={(ev) => setSettings({ token: ev.target.value })}
+        onChange={(ev) =>
+          setSettings((prev) => ({ ...prev, token: ev.target.value }))
+        }
       />
+
+      <Checkbox
+        label="Parse automatically"
+        checked={settings.autoParse}
+        onChange={() =>
+          setSettings((prev) => ({
+            ...prev,
+            autoParse: !prev.autoParse,
+          }))
+        }
+      />
+
+      <label className="mb-2 text-sm font-medium text-white">
+        Show Furigana
+      </label>
+      <select
+        value={settings.furiganaDisplay}
+        onChange={(x) =>
+          setSettings((prev) => ({
+            ...prev,
+            furiganaDisplay: x.currentTarget.value as FuriganaDisplay,
+          }))
+        }
+        className="relative mb-2 px-2 py-1 text-sm font-medium text-white bg-gray-700 w-full appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-gray-600 outline-none"
+      >
+        <option value="always">always</option>
+        <option value="unknown">on unknown</option>
+        <option value="never">never</option>
+      </select>
 
       <button
         type="button"

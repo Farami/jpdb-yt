@@ -1,9 +1,9 @@
-import useAuthStore from "@src/store/auth";
+import useSettingsStore from "@src/store/settings";
 import axios from "axios";
 import { useMemo } from "react";
 
 const useAxios = () => {
-	const [{ token }] = useAuthStore();
+	const [{ token }] = useSettingsStore();
 
 	const instance = useMemo(
 		() =>
