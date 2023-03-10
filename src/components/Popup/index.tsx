@@ -1,11 +1,13 @@
+import useSettingsStore from "@src/store/settings";
 import React from "react";
-import { stateColor } from "../CaptionToken";
 
 type Props = {
   token: Token;
 };
 
 function Popup({ token: { state, reading, spelling, meanings } }: Props) {
+  const [{ stateColors }] = useSettingsStore();
+
   return (
     <div
       lang="ja"
@@ -18,7 +20,7 @@ function Popup({ token: { state, reading, spelling, meanings } }: Props) {
         {state.map((x) => (
           <div
             className={"flex-0.5 border rounded-md pb-2 text-2xl font-bold"}
-            style={{ color: stateColor[x] }}
+            style={{ color: stateColors[x] }}
           >
             {x}
           </div>

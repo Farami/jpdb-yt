@@ -38,8 +38,6 @@ type VocabState =
 	| "locked"
 	| "unknown"; // TODO add missing states
 
-type KnownStates = "known" | "never-forget" | "failed";
-
 type TokenResponse = [number, number, number, (string | string[])[]];
 type TokenResponseGroup = TokenResponse[];
 type VocabResponse = [VocabState[], string, string, string[]];

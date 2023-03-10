@@ -6,7 +6,7 @@ import useVideoId from "@src/hooks/useVideoId";
 import useSettingsStore from "@src/store/settings";
 import { useEffect, useMemo, useState } from "react";
 import Caption from "../Caption";
-import ParseButton from "../ParseButton";
+import ParseButton from "../atoms/ParseButton";
 
 export default function SubtitleViewer() {
   const videoTime = useCurrentVideoTime();

@@ -6,29 +6,15 @@ type Props = {
   token: Token;
 };
 
-export const stateColor: { [key in VocabState]: string } = {
-  learning: "#5EA77F",
-  blacklisted: "#fff",
-  due: "#FF4500",
-  failed: "#FFC000",
-  known: "#70C000",
-  "never-forget": "#70C000",
-  redundant: "#70C000",
-  locked: "#FFD5D5",
-  suspended: "#FFD5D5",
-  new: "#CECECE",
-  unknown: "#CB94FF",
-};
-
 const knownStates: VocabState[] = ["known", "never-forget", "failed"];
 
 function CaptionToken({ token }: Props) {
   let { text, furigana, state } = token;
   const [isHovered, setIsHovered] = useState(false);
-  const [{ furiganaDisplay }] = useSettingsStore();
+  const [{ furiganaDisplay, stateColors }] = useSettingsStore();
 
   let style: CSSProperties = {
-    color: stateColor[state[0]] ?? "#fff",
+    color: stateColors[state[0]] ?? "#fff",
     fontWeight: "bold",
     backgroundColor: isHovered ? "gray" : "",
     cursor: "pointer",
