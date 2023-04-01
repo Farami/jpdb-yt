@@ -15,7 +15,7 @@ const defaultStateColor: StateColors = {
 	locked: "#FFD5D5",
 	suspended: "#FFD5D5",
 	new: "#CECECE",
-	unknown: "#CB94FF",
+	unknown: "#fff",
 };
 
 interface Store {
