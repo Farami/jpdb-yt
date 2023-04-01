@@ -5,6 +5,7 @@ type FuriganaDisplay = "always" | "unknown" | "never";
 type StateColors = { [key in VocabState]: string };
 
 const defaultStateColor: StateColors = {
+	"not-in-deck": "#32538C",
 	learning: "#5EA77F",
 	blacklisted: "#FFFFFF",
 	due: "#FF4500",
@@ -14,7 +15,7 @@ const defaultStateColor: StateColors = {
 	redundant: "#70C000",
 	locked: "#FFD5D5",
 	suspended: "#FFD5D5",
-	new: "#CECECE",
+	new: "#4B8DFF",
 	unknown: "#FFFFFF",
 };
 

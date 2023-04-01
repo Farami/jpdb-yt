@@ -1,4 +1,3 @@
-import chunkArray from "@src/helpers/chunkArray";
 import useCaptions from "@src/hooks/useCaptions";
 import useCurrentVideoTime from "@src/hooks/useCurrentVideoTime";
 import useParser from "@src/hooks/useParser";
@@ -7,6 +6,7 @@ import useSettingsStore from "@src/store/settings";
 import { useEffect, useMemo, useState } from "react";
 import Caption from "../Caption";
 import ParseButton from "../atoms/ParseButton";
+import useCaptionTokensStore from "@src/store/captionTokensStore";
 
 export default function SubtitleViewer() {
   const videoTime = useCurrentVideoTime();
@@ -15,7 +15,9 @@ export default function SubtitleViewer() {
   const parse = useParser();
   const [{ token, autoParse }] = useSettingsStore();
 
-  const [parsedCaptions, setParsedCaptions] = useState<ParsedCaption[]>([]);
+  const [parsedCaptions, setParsedCaptions] = useCaptionTokensStore(
+    ({ captions, setCaptions }) => [captions, setCaptions]
+  );
 
   // reset parsed captions when video id changes (otherwise captions would persist across different videos)
   useEffect(() => setParsedCaptions([]), [videoId]);

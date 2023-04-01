@@ -41,7 +41,14 @@ const useParser = () => {
 					"length_utf16",
 					"furigana",
 				],
-				vocabulary_fields: ["card_state", "spelling", "reading", "meanings"],
+				vocabulary_fields: [
+					"card_state",
+					"spelling",
+					"reading",
+					"meanings",
+					"vid",
+					"sid",
+				],
 			};
 
 			console.log("body", body);
@@ -65,14 +72,6 @@ const useParser = () => {
 			for (let textIndex = 0; textIndex < subtitles.length; textIndex++) {
 				let text = subtitles[textIndex];
 				let apiTokens = apiTokenGroups[textIndex];
-				// console.log(
-				// 	"subtitles",
-				// 	text,
-				// 	"apiTokens",
-				// 	apiTokens,
-				// 	"index",
-				// 	textIndex,
-				// );
 
 				let tokens: Token[] = [];
 
@@ -83,6 +82,8 @@ const useParser = () => {
 					if (apiToken) {
 						if (runningToken) {
 							tokens.push({
+								vid: null,
+								sid: null,
 								text: text.slice(
 									runningToken.position,
 									runningToken.position + runningToken.length,
@@ -105,10 +106,12 @@ const useParser = () => {
 								apiToken.position + apiToken.length,
 							),
 							furigana: apiToken.furigana,
-							state: vocab?.[0] ?? ["new"], // bruh
+							state: vocab?.[0] ?? ["not-in-deck"], // bruh
 							spelling: vocab?.[1],
 							reading: vocab?.[2],
 							meanings: vocab?.[3] ?? [], // TODO improve types
+							vid: vocab?.[4] ?? null,
+							sid: vocab?.[5] ?? null,
 							position: i,
 						});
 

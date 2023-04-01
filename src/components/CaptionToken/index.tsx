@@ -1,3 +1,5 @@
+import useAxios from "@src/hooks/useAxios";
+import useCaptionTokensStore from "@src/store/captionTokensStore";
 import useSettingsStore from "@src/store/settings";
 import { CSSProperties, useState } from "react";
 import Popup from "../Popup";
@@ -9,9 +11,13 @@ type Props = {
 const knownStates: VocabState[] = ["known", "never-forget", "failed"];
 
 function CaptionToken({ token }: Props) {
-  let { text, furigana, state } = token;
+  const axios = useAxios();
+  let { text, furigana, state, vid, sid } = token;
   const [isHovered, setIsHovered] = useState(false);
-  const [{ furiganaDisplay, stateColors }] = useSettingsStore();
+  const [{ furiganaDisplay, stateColors, miningDeckId }] = useSettingsStore();
+  const updateTokenState = useCaptionTokensStore(
+    (store) => store.updateTokenState
+  );
 
   const isUnknown = state[0] === "unknown";
 
@@ -24,8 +30,26 @@ function CaptionToken({ token }: Props) {
     paddingRight: "2px",
   };
 
-  const onHover = () => setIsHovered(true);
+  const onHover = () => {
+    console.log(state);
+    setIsHovered(true);
+  };
   const onLeave = () => setIsHovered(false);
+
+  const onDoubleClick = async () => {
+    if (!miningDeckId) {
+      return;
+    }
+
+    const response = await axios.post("deck/add-vocabulary", {
+      id: miningDeckId,
+      vocabulary: [[vid, sid]],
+    });
+
+    if (response.status === 200 && token.state[0] === "not-in-deck") {
+      updateTokenState(vid, sid, "new");
+    }
+  };
 
   if (!furigana || furigana.length === 0) {
     furigana = [text];
@@ -60,6 +84,9 @@ function CaptionToken({ token }: Props) {
       onFocus={onHover}
       onMouseOut={onLeave}
       onBlur={onLeave}
+      onDoubleClick={onDoubleClick}
+      // prevent selection on doubleclick
+      onMouseDown={(ev) => ev.detail > 1 && ev.preventDefault()}
     >
       {isHovered && !isUnknown && <Popup token={token} />}
       {elements}

@@ -26,6 +26,7 @@ type ParseRequest = {
 };
 
 type VocabState =
+	| "not-in-deck"
 	| "new"
 	| "learning"
 	| "known"
@@ -40,7 +41,7 @@ type VocabState =
 
 type TokenResponse = [number, number, number, (string | string[])[]];
 type TokenResponseGroup = TokenResponse[];
-type VocabResponse = [VocabState[], string, string, string[]];
+type VocabResponse = [VocabState[], string, string, string[], number, number];
 
 type Deck = {
 	id: number;
@@ -57,6 +58,8 @@ type DecksResponse = {
 };
 
 type Token = {
+	vid: number | null;
+	sid: number | null;
 	text: string;
 	furigana: (string | string[])[];
 	spelling: string;
