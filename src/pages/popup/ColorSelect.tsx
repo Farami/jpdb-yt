@@ -1,6 +1,5 @@
 import Label from "@src/components/atoms/Label";
-import useSettingsStore from "@src/store/settings";
-import React from "react";
+import useSettingsStore, { defaults } from "@src/store/settings";
 
 function ColorSelect() {
   const [{ stateColors }, setSettings] = useSettingsStore();
@@ -26,6 +25,17 @@ function ColorSelect() {
           />
         </>
       ))}
+      <button
+        onClick={() =>
+          setSettings((prev) => ({
+            ...prev,
+            stateColors: defaults.stateColors,
+          }))
+        }
+        className="border text-sm rounded-lg block w-full p-1 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 mb-4"
+      >
+        Reset
+      </button>
     </div>
   );
 }

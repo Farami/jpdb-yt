@@ -1,7 +1,4 @@
-import useSettingsStore, {
-  defaults,
-  FuriganaDisplay,
-} from "@src/store/settings";
+import useSettingsStore, { FuriganaDisplay } from "@src/store/settings";
 import Checkbox from "@src/components/atoms/Checkbox";
 import Label from "@src/components/atoms/Label";
 import Input from "@src/components/atoms/Input";
@@ -81,7 +78,8 @@ const Popup = () => {
                 }))
               }
             />
-
+          </TabPanel>
+        </div>
 
         <TabPanel>
           <ColorSelect />

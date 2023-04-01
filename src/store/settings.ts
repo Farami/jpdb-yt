@@ -42,4 +42,4 @@ const useSettingsStore = createChromeStorageStateHookLocal(
 );
 
 export default useSettingsStore;
-export { FuriganaDisplay };
+export { FuriganaDisplay, defaults };
