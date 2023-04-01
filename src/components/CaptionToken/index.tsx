@@ -13,11 +13,13 @@ function CaptionToken({ token }: Props) {
   const [isHovered, setIsHovered] = useState(false);
   const [{ furiganaDisplay, stateColors }] = useSettingsStore();
 
+  const isUnknown = state[0] === "unknown";
+
   let style: CSSProperties = {
     color: stateColors[state[0]] ?? "#fff",
     fontWeight: "bold",
-    backgroundColor: isHovered ? "gray" : "",
-    cursor: "pointer",
+    backgroundColor: isHovered && !isUnknown ? "gray" : "",
+    cursor: isUnknown ? "default" : "pointer",
     paddingLeft: "2px",
     paddingRight: "2px",
   };
@@ -59,7 +61,7 @@ function CaptionToken({ token }: Props) {
       onMouseOut={onLeave}
       onBlur={onLeave}
     >
-      {isHovered && <Popup token={token} />}
+      {isHovered && !isUnknown && <Popup token={token} />}
       {elements}
     </div>
   );
