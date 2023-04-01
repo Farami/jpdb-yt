@@ -23,6 +23,7 @@ interface Store {
 	autoParse: boolean;
 	furiganaDisplay: FuriganaDisplay;
 	stateColors: StateColors;
+	miningDeckId?: number;
 }
 
 const defaults: Store = {
@@ -30,6 +31,7 @@ const defaults: Store = {
 	autoParse: false,
 	furiganaDisplay: "always",
 	stateColors: defaultStateColor,
+	miningDeckId: null,
 };
 
 const SETTINGS_KEY = "settings";

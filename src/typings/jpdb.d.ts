@@ -42,9 +42,18 @@ type TokenResponse = [number, number, number, (string | string[])[]];
 type TokenResponseGroup = TokenResponse[];
 type VocabResponse = [VocabState[], string, string, string[]];
 
+type Deck = {
+	id: number;
+	name: string;
+};
+
 type ParseResponse = {
 	tokens: TokenResponseGroup[];
 	vocabulary: VocabResponse[];
+};
+
+type DecksResponse = {
+	decks: [number, string][];
 };
 
 type Token = {
