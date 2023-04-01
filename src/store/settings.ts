@@ -6,7 +6,7 @@ type StateColors = { [key in VocabState]: string };
 
 const defaultStateColor: StateColors = {
 	learning: "#5EA77F",
-	blacklisted: "#fff",
+	blacklisted: "#FFFFFF",
 	due: "#FF4500",
 	failed: "#FFC000",
 	known: "#70C000",
@@ -15,7 +15,7 @@ const defaultStateColor: StateColors = {
 	locked: "#FFD5D5",
 	suspended: "#FFD5D5",
 	new: "#CECECE",
-	unknown: "#fff",
+	unknown: "#FFFFFF",
 };
 
 interface Store {
