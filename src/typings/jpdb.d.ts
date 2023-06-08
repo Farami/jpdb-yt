@@ -1,12 +1,4 @@
-type TokenFields =
-	| "vocabulary_index"
-	| "position_utf8"
-	| "position_utf16"
-	| "position_utf32"
-	| "length_utf8"
-	| "length_utf16"
-	| "length_utf32"
-	| "furigana";
+type TokenFields = "vocabulary_index" | "position" | "length" | "furigana";
 type VocabularyFields =
 	| "vid"
 	| "sid"
@@ -23,6 +15,7 @@ type ParseRequest = {
 	text: string[];
 	token_fields: TokenFields[];
 	vocabulary_fields: VocabularyFields[];
+	position_length_encoding: "utf8" | "utf16" | "utf32";
 };
 
 type VocabState =

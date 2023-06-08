@@ -35,12 +35,7 @@ const useParser = () => {
 		async (subtitles: string[]) => {
 			const body: ParseRequest = {
 				text: subtitles,
-				token_fields: [
-					"vocabulary_index",
-					"position_utf16",
-					"length_utf16",
-					"furigana",
-				],
+				token_fields: ["vocabulary_index", "position", "length", "furigana"],
 				vocabulary_fields: [
 					"card_state",
 					"spelling",
@@ -49,6 +44,7 @@ const useParser = () => {
 					"vid",
 					"sid",
 				],
+				position_length_encoding: "utf16",
 			};
 
 			console.log("body", body);
