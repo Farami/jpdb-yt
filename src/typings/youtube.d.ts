@@ -7,7 +7,7 @@ type Caption = {
 type ParsedCaption = {
 	dur: number;
 	start: number;
-	text: Token[];
+	text: string;
 };
 
 type CaptionsTrackList = {

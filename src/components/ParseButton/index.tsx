@@ -25,8 +25,8 @@ function ParseButton({ onClick, active }: Props) {
               y1="0.2"
               y2="0.8"
             >
-              <stop offset="0" stopColor={active ? "#F000" : "#fd9"} />
-              <stop offset="1" stopColor={active ? "#F000" : "#9df"} />
+              <stop offset="0" stopColor={!active ? "#F000" : "#fd9"} />
+              <stop offset="1" stopColor={!active ? "#F000" : "#9df"} />
             </linearGradient>
             <filter
               id="editing-sticker"
