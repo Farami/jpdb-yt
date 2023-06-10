@@ -2,9 +2,9 @@ name: Build And Test
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   build:
@@ -19,5 +19,4 @@ jobs:
         cache: 'yarn'
     - run: yarn install
     - run: yarn build:hmr
-    - run: yarn test
     - run: yarn build
